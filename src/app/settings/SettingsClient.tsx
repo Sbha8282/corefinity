@@ -8,6 +8,7 @@ import {
   Key, 
   ShieldCheck, 
   Shield,
+  Smartphone,
   Loader2
 } from "lucide-react"
 import { Card } from "@/components/ui/card"
