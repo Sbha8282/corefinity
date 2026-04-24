@@ -9,6 +9,9 @@ import { FirebaseClientProvider } from "@/firebase";
 export const metadata: Metadata = {
   title: 'Corefinity Dashboard',
   description: 'Clean DevOps Dashboard for Infrastructure Management',
+  icons: {
+    icon: '/favicon.png',
+  },
 };
 
 export default function RootLayout({
