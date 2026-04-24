@@ -26,6 +26,9 @@ import { toast } from "@/hooks/use-toast"
 const tabs = [
   { id: "profile", label: "Profile", icon: User },
   { id: "ssh", label: "SSH Keys", icon: Key },
+  { id: "notifications", label: "Notifications", icon: Bell },
+  { id: "api", label: "API Tokens", icon: ShieldCheck },
+  { id: "two-factor", label: "Two Factor Authentication", icon: Smartphone },
 ]
 
 export function SettingsClient() {
@@ -200,7 +203,104 @@ export function SettingsClient() {
             </div>
           )}
 
-          {activeTab !== "profile" && activeTab !== "ssh" && (
+          {activeTab === "notifications" && (
+            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+              <Card className="border border-slate-200 shadow-sm rounded-none overflow-hidden bg-white">
+                <div className="p-8 space-y-6">
+                  <div>
+                    <h2 className="text-lg font-semibold text-[#2d3748]">Notification Preferences</h2>
+                    <p className="text-sm text-[#718096]">Choose what notifications you want to receive.</p>
+                  </div>
+                  <div className="space-y-4">
+                    <div className="flex items-center space-x-2">
+                      <input type="checkbox" id="email-deployments" className="rounded" defaultChecked />
+                      <Label htmlFor="email-deployments" className="text-sm">Email notifications for deployments</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <input type="checkbox" id="email-tickets" className="rounded" defaultChecked />
+                      <Label htmlFor="email-tickets" className="text-sm">Email notifications for tickets</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <input type="checkbox" id="email-security" className="rounded" />
+                      <Label htmlFor="email-security" className="text-sm">Email notifications for security events</Label>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-slate-50/50 p-4 px-8 border-t border-slate-200 flex justify-end">
+                  <Button onClick={handleUpdate} className="bg-primary hover:bg-orange-600 text-white px-6 h-10 font-bold rounded-lg transition-all">
+                    {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : "Save Preferences"}
+                  </Button>
+                </div>
+              </Card>
+            </div>
+          )}
+
+          {activeTab === "api" && (
+            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+              <Card className="border border-slate-200 shadow-sm rounded-none overflow-hidden bg-white">
+                <div className="p-8 space-y-6">
+                  <div>
+                    <h2 className="text-lg font-semibold text-[#2d3748]">API Tokens</h2>
+                    <p className="text-sm text-[#718096]">Manage your API tokens for programmatic access.</p>
+                  </div>
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label className="text-sm font-semibold text-[#4a5568]">Token Name</Label>
+                      <Input placeholder="e.g. CI/CD Pipeline" className="bg-white border-[#cbd5e0] h-11 rounded-lg" />
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-slate-50/50 p-4 px-8 border-t border-slate-200 flex justify-end">
+                  <Button onClick={handleUpdate} className="bg-primary hover:bg-orange-600 text-white px-6 h-10 font-bold rounded-lg transition-all">
+                    {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : "Generate Token"}
+                  </Button>
+                </div>
+              </Card>
+
+              <Card className="border border-slate-200 shadow-sm rounded-none overflow-hidden bg-white">
+                <div className="p-8 space-y-6">
+                  <h2 className="text-lg font-semibold text-[#2d3748]">Your API Tokens</h2>
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between p-4 border border-slate-200 rounded-lg">
+                      <div>
+                        <div className="font-medium text-[#2d3748]">CI/CD Pipeline</div>
+                        <div className="text-sm text-[#718096]">Created on April 24, 2026 • Last used: Never</div>
+                      </div>
+                      <Button variant="outline" size="sm" className="text-red-600 border-red-200 hover:bg-red-50">
+                        Revoke
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            </div>
+          )}
+
+          {activeTab === "two-factor" && (
+            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+              <Card className="border border-slate-200 shadow-sm rounded-none overflow-hidden bg-white">
+                <div className="p-8 space-y-6">
+                  <div>
+                    <h2 className="text-lg font-semibold text-[#2d3748]">Two-Factor Authentication</h2>
+                    <p className="text-sm text-[#718096]">Add an extra layer of security to your account.</p>
+                  </div>
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="font-medium text-[#2d3748]">Authenticator App</div>
+                        <div className="text-sm text-[#718096]">Use an authenticator app to generate verification codes.</div>
+                      </div>
+                      <Button variant="outline" className="text-green-600 border-green-200 hover:bg-green-50">
+                        Enable
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            </div>
+          )}
+
+          {activeTab !== "profile" && activeTab !== "ssh" && activeTab !== "notifications" && activeTab !== "api" && activeTab !== "two-factor" && (
             <div className="py-20 text-center space-y-4 opacity-50 bg-white border border-dashed rounded-xl">
               <div className="text-slate-400 text-sm font-medium italic">Content for {activeTab} is coming soon...</div>
             </div>
