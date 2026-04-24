@@ -1,0 +1,118 @@
+
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile information and settings.",
+      "type": "object",
+      "properties": {
+        "displayName": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "role": { "type": "string" },
+        "avatarUrl": { "type": "string" },
+        "notifications": {
+          "type": "object",
+          "properties": {
+            "alerts": { "type": "boolean" },
+            "updates": { "type": "boolean" },
+            "security": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "Environment": {
+      "title": "Environment",
+      "description": "An infrastructure environment.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "status": { "type": "string", "enum": ["Live", "Staging", "Failed", "In Progress", "Maintenance"] },
+        "type": { "type": "string", "enum": ["Production", "Staging", "Development"] },
+        "cluster": { "type": "string" },
+        "nodes": { "type": "number" },
+        "pods": { "type": "number" },
+        "health": { "type": "number" },
+        "priority": { "type": "string", "enum": ["Low", "Medium", "High"] },
+        "assignee": { "type": "string" }
+      }
+    },
+    "Deployment": {
+      "title": "Deployment",
+      "description": "A software deployment record.",
+      "type": "object",
+      "properties": {
+        "repo": { "type": "string" },
+        "status": { "type": "string", "enum": ["Success", "Failed", "In Progress"] },
+        "env": { "type": "string" },
+        "branch": { "type": "string" },
+        "commit": { "type": "string" },
+        "author": { "type": "string" },
+        "duration": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "Ticket": {
+      "title": "Ticket",
+      "description": "A support or engineering ticket.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "status": { "type": "string", "enum": ["Open", "In Progress", "Resolved"] },
+        "priority": { "type": "string", "enum": ["Low", "Medium", "High"] },
+        "author": { "type": "string" },
+        "category": { "type": "string" },
+        "description": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "SshKey": {
+      "title": "SshKey",
+      "description": "A user's public SSH key.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "key": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "ApiToken": {
+      "title": "ApiToken",
+      "description": "An API authentication token.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "token": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    }
+  },
+  "auth": {
+    "providers": ["google.com", "password"]
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile data."
+    },
+    "/environments/{envId}": {
+      "schema": "Environment",
+      "description": "Global environment data."
+    },
+    "/deployments/{depId}": {
+      "schema": "Deployment",
+      "description": "Global deployment records."
+    },
+    "/tickets/{ticketId}": {
+      "schema": "Ticket",
+      "description": "Support tickets."
+    },
+    "/users/{userId}/sshKeys/{keyId}": {
+      "schema": "SshKey",
+      "description": "User specific SSH keys."
+    },
+    "/users/{userId}/apiTokens/{tokenId}": {
+      "schema": "ApiToken",
+      "description": "User specific API tokens."
+    }
+  }
+}
