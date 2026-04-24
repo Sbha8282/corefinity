@@ -25,10 +25,7 @@ import { toast } from "@/hooks/use-toast"
 
 const tabs = [
   { id: "profile", label: "Profile", icon: User },
-  { id: "notifications", label: "Notifications", icon: Bell },
-  { id: "api", label: "API Tokens", icon: Key },
-  { id: "two-factor", label: "Two Factor Authentication", icon: ShieldCheck },
-  { id: "firewall", label: "Firewall", icon: Shield },
+  { id: "ssh", label: "SSH Keys", icon: Key },
 ]
 
 export function SettingsClient() {
@@ -155,7 +152,55 @@ export function SettingsClient() {
             </div>
           )}
 
-          {activeTab !== "profile" && (
+          {activeTab === "ssh" && (
+            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+              <Card className="border border-slate-200 shadow-sm rounded-none overflow-hidden bg-white">
+                <div className="p-8 space-y-6">
+                  <div>
+                    <h2 className="text-lg font-semibold text-[#2d3748]">SSH Keys</h2>
+                    <p className="text-sm text-[#718096]">Manage your SSH keys for secure access to your environments.</p>
+                  </div>
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label className="text-sm font-semibold text-[#4a5568]">SSH Key Title</Label>
+                      <Input placeholder="e.g. My Laptop" className="bg-white border-[#cbd5e0] h-11 rounded-lg" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-sm font-semibold text-[#4a5568]">SSH Public Key</Label>
+                      <textarea 
+                        className="flex min-h-[80px] w-full rounded-md border border-[#cbd5e0] bg-white px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+                        placeholder="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC..."
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-slate-50/50 p-4 px-8 border-t border-slate-200 flex justify-end">
+                  <Button onClick={handleUpdate} className="bg-primary hover:bg-orange-600 text-white px-6 h-10 font-bold rounded-lg transition-all">
+                    {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : "Add SSH Key"}
+                  </Button>
+                </div>
+              </Card>
+
+              <Card className="border border-slate-200 shadow-sm rounded-none overflow-hidden bg-white">
+                <div className="p-8 space-y-6">
+                  <h2 className="text-lg font-semibold text-[#2d3748]">Your SSH Keys</h2>
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between p-4 border border-slate-200 rounded-lg">
+                      <div>
+                        <div className="font-medium text-[#2d3748]">My Laptop</div>
+                        <div className="text-sm text-[#718096]">Added on April 24, 2026</div>
+                      </div>
+                      <Button variant="outline" size="sm" className="text-red-600 border-red-200 hover:bg-red-50">
+                        Remove
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            </div>
+          )}
+
+          {activeTab !== "profile" && activeTab !== "ssh" && (
             <div className="py-20 text-center space-y-4 opacity-50 bg-white border border-dashed rounded-xl">
               <div className="text-slate-400 text-sm font-medium italic">Content for {activeTab} is coming soon...</div>
             </div>

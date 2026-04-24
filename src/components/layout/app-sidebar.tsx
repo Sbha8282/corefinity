@@ -39,9 +39,6 @@ const navigation = [
 
 const securityNav = [
   { name: "SSH Keys", href: "/settings?tab=ssh", icon: Key },
-  { name: "Notifications", href: "/settings?tab=notifications", icon: Bell },
-  { name: "API Tokens", href: "/settings?tab=api", icon: ShieldCheck },
-  { name: "Two Factor", href: "/settings?tab=two-factor", icon: Smartphone },
 ]
 
 export function AppSidebar() {
